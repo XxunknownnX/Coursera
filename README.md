@@ -1,34 +1,30 @@
-# Coursera
-make_CacheMatrix <- function( m = matrix() ) {
-  i <- NULL
-  set <- function( matrix ) {
-    m <<- matrix
-    i <<- NULL
-  }
-  get <- function() {
-    m
-  }
-  setting_Inverse <- function(inverse) {
-    i <<- inverse
-  }
-  getting_Inverse <- function() {
-    i
-  }
-  
-  list(set = set, get = get,
-       setInverse = setInverse,
-       getInverse = getInverse)
+makeCacheMatrix <- function(x = matrix()) {
+
+makeCacheMatrix <- function(x = matrix()) { 
+    inv <- NULL                             
+    set <- function(y) {                    
+        x <<- y                             
+        inv <<- NULL                        
+    }
+    get <- function() x                     
+
+    setinverse <- function(inverse) inv <<- inverse  
+    getinverse <- function() inv                     
+    list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)  
+                                                                                  
 }
-
-
 cacheSolve <- function(x, ...) {
-  
-  m <- x$getInverse()
-  if( !is.null(m) ) {
-    message("getting cached data")
-    return(m)
+    inv <- x$getinverse()
+    if(!is.null(inv)) {
+        message("getting cached data")
+        return(inv)
+    }
+    data <- x$get()
+    inv <- solve(data, ...)
+    x$setinverse(inv)
+    inv
+}
   }
-  
   data <- x$get()
   m <- solve(data) %*% data
   
